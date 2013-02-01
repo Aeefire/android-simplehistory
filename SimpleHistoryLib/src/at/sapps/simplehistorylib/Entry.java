@@ -1,6 +1,8 @@
 package at.sapps.simplehistorylib;
 
+import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -15,6 +17,7 @@ public class Entry {
 	private String filename;
 	private String filepath;
 	private String date;
+	private DateFormat formatter = DateFormat.getDateTimeInstance();
 
 	/* constants */
 	public static final String DATE_DELIMITER = "-";
@@ -31,11 +34,11 @@ public class Entry {
 		cal.setTimeInMillis(current);
 
 		StringBuilder builder = new StringBuilder();
-		builder.append(cal.get(Calendar.MINUTE)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.HOUR_OF_DAY)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.MINUTE)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.DATE)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.MONTH)).append(DATE_DELIMITER);
-		builder.append(cal.get(Calendar.YEAR)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.YEAR));
 
 		Log.d(TAG, "date generated: " + builder.toString());
 		return builder.toString();
@@ -67,6 +70,16 @@ public class Entry {
 
 	public String getDate() {
 		return date;
+	}
+
+	public String getBeautifulDate() {
+		String[] dateParts = date.split(DATE_DELIMITER);
+		Date date = new Date(Integer.valueOf(dateParts[4])-1900, Integer.valueOf(dateParts[3]),
+				Integer.valueOf(dateParts[2]), Integer.valueOf(dateParts[0]),
+				Integer.valueOf(dateParts[1]));
+
+		return formatter.format(date);
+
 	}
 
 	public void setDate(long millis) {
