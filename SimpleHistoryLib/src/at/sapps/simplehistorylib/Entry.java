@@ -10,10 +10,14 @@ public class Entry {
 
 	private static final String TAG = "simplehistorylib.Entry";
 
+	/* database fields */
 	private int id;
 	private String filename;
 	private String filepath;
 	private String date;
+
+	/* constants */
+	public static final String DATE_DELIMITER = "-";
 
 	public Entry(String filename, String filepath) {
 		this.filename = filename;
@@ -26,11 +30,15 @@ public class Entry {
 		Calendar cal = new GregorianCalendar(Locale.getDefault());
 		cal.setTimeInMillis(current);
 
-		String date = cal.get(Calendar.DATE) + "-" + cal.get(Calendar.MONTH)
-				+ "-" + cal.get(Calendar.YEAR);
+		StringBuilder builder = new StringBuilder();
+		builder.append(cal.get(Calendar.MINUTE)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.HOUR_OF_DAY)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.DATE)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.MONTH)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.YEAR)).append(DATE_DELIMITER);
 
-		Log.d(TAG, "date generated: " + date);
-		return date;
+		Log.d(TAG, "date generated: " + builder.toString());
+		return builder.toString();
 	}
 
 	public int getId() {
