@@ -1,5 +1,8 @@
 <resources>
 
     <string name="app_name">SimpleHistoryLib</string>
+    <string name="m_openFile">Open file</string>
+    <string name="m_deleteFileFromSd">Delete file from storage</string>
+    <string name="m_removeFileFromList">Remove file from list</string>
 
 </resources>

@@ -8,7 +8,7 @@ import java.util.Locale;
 
 import android.util.Log;
 
-public class Entry {
+public class Entry implements Comparable<Entry> {
 
 	private static final String TAG = "simplehistorylib.Entry";
 
@@ -36,6 +36,7 @@ public class Entry {
 		StringBuilder builder = new StringBuilder();
 		builder.append(cal.get(Calendar.HOUR_OF_DAY)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.MINUTE)).append(DATE_DELIMITER);
+		builder.append(cal.get(Calendar.SECOND)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.DATE)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.MONTH)).append(DATE_DELIMITER);
 		builder.append(cal.get(Calendar.YEAR));
@@ -74,11 +75,11 @@ public class Entry {
 
 	public String getBeautifulDate() {
 		String[] dateParts = date.split(DATE_DELIMITER);
-		Date date = new Date(Integer.valueOf(dateParts[4])-1900, Integer.valueOf(dateParts[3]),
-				Integer.valueOf(dateParts[2]), Integer.valueOf(dateParts[0]),
-				Integer.valueOf(dateParts[1]));
-
-		return formatter.format(date);
+		Date temp = new Date(Integer.valueOf(dateParts[5]) - 1900,
+				Integer.valueOf(dateParts[4]), Integer.valueOf(dateParts[3]),
+				Integer.valueOf(dateParts[0]), Integer.valueOf(dateParts[1]),
+				Integer.valueOf(2));
+		return formatter.format(temp);
 
 	}
 
@@ -94,5 +95,15 @@ public class Entry {
 	public String toString() {
 		return "Entry [id=" + id + ", filename=" + filename + ", filepath="
 				+ filepath + ", date=" + date + "]";
+	}
+
+	@Override
+	public int compareTo(Entry another) {
+		if (id < another.getId())
+			return 1;
+		if (id > another.getId())
+			return -1;
+
+		return 0;
 	}
 }

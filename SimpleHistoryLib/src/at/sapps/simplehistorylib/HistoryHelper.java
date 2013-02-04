@@ -1,5 +1,6 @@
 package at.sapps.simplehistorylib;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -118,7 +119,7 @@ public class HistoryHelper extends SQLiteOpenHelper {
 	 * @return all entries
 	 */
 	public List<Entry> getAllEntries() {
-		List<Entry> result = new Vector<Entry>();
+		List<Entry> result = new ArrayList<Entry>();
 		Cursor resultCursor;
 		String statement = "SELECT * FROM " + TABLE_DOWNLOADS + " ORDER BY "
 				+ KEY_ID + " DESC;";
@@ -181,7 +182,7 @@ public class HistoryHelper extends SQLiteOpenHelper {
 	 * @return list with all entries, which fit to the search construct
 	 */
 	public List<Entry> getEntriesByAttribute(String attribute, String value) {
-		List<Entry> result = new Vector<Entry>();
+		List<Entry> result = new ArrayList<Entry>();
 		Cursor resultCursor = null;
 		String statement = "SELECT DISTINCT * FROM " + TABLE_DOWNLOADS
 				+ " WHERE " + attribute + "=" + value + " ORDER BY " + KEY_ID
